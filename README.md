@@ -79,3 +79,6 @@ vertsmaskinen og gjestmaskinen.
 
 7. Skriv <code>sudo dtrace -l</code> for å liste alle probes på systemet ditt.
 Du er i gang!
+
+<hr>
+© Carl Martin Rosenberg 2015
