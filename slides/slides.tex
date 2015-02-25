@@ -4,6 +4,10 @@
 \usecolortheme{beaver}
 \usepackage[labelformat=empty]{caption}
 \usepackage{listings}
+\usepackage{hyperref}
+\usepackage[backend=biber, style=numeric, sorting=nyt]{biblatex}
+\addbibresource{references.bib}
+\nocite{*}
 
 
 \title{DTrace}
@@ -38,62 +42,83 @@
 \begin{itemize}
     \item Dette er altså et foredrag om DTrace
 
+    \item Merk: Jeg er ikke DTrace-ekspert, men jeg tror jeg
+        vet nok til å overbevise deg om at DTrace er verdt å sjekke ut!
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Velkommen!}
+\begin{itemize}
+
     \item DTrace er en skikkelig heftig teknologi (bare vent!),
     men vanskelig å forstå uten å først forstå hvilke problemer
-    det er laget for å løse…
+    det er laget for å løse.
 
-    \item Så la oss ta en titt på
+    \item La oss derfor først ta en titt på
     hvordan software-verdenen ser ut i dag…
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{Moderne software-løsninger er systemer}
+    \frametitle{Moderne software-løsninger er \emph{systemer}}
 
 \begin{itemize}
 
     \item Moderne software-løsninger er \emph{systemer}, ikke enkeltprogrammer.
 
-    \item Moderne software-utvikling drives fremover av
-      tilgang til gjenbrukbare komponenter: Hvis du vil lage en blogg, trenger
-      du ikke å finne opp en database, et operativsystem osv…
+    \item  Fantastisk! Man slipper å finne på hjulet på nytt!
 
-  \item Problemet er da at løsningen du leverer til kunden består av mye mer enn
-      koden du har skrevet selv. Faktisk er din kode kanskje den minst
-      komplekse komponenten i løsningen…
+    \item Likevel: Din egen kode er bare en bitteliten del av helheten…
+
+    \item …og sannsynligvis den minst komplekse av dem alle.
+
+    % \item Moderne software-utvikling drives fremover av
+    %   tilgang til gjenbrukbare komponenter: operativsystemer, databaser osv.
+      % Hvis du vil lage en blogg, trenger du ikke å finne opp en database, et operativsystem osv…
+      % Wordpress
+
+  %Problemet er da at løsningen du leverer til kunden består av mye mer enn
+  %    koden du har skrevet selv. Faktisk er din kode kanskje den minst
+  %    komplekse komponenten i løsningen…
 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Moderne software-løsninger er systemer}
+    %\frametitle{Moderne software-løsninger er systemer}
+    \frametitle{Når vi utvikler komplekse systemer, trenger vi…}
 \begin{itemize}
 
-    \item Når vi utvikler komplekse systemer, trenger vi…
+    \item Vi må kunne analysere hvordan komponentene interagerer med hverandre:
+        \emph{Er det databasen eller webserveren som gjør at ting går treigt?}
 
-        \item En mulighet til å se hvordan de forskjellige komponentene interagerer med
-        hverandre: Er det databasen eller webserveren som gjør at ting går treigt?
-
-    \item En mulighet til å få en viss innsikt i programmer vi
-        \begin{itemize}
+    \item Vi må kunne få en viss innsikt i programmer vi enten
+        \begin{enumerate}
             \item ikke selv har kildekoden til, eller
-            \item ikke selv har tid og ressurser til å analysere fullstendig
-            \end{itemize}
+            \item ikke selv har tid og ressurser til å analysere fullstendig.
+            \end{enumerate}
 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Moderne software-løsninger er systemer}
+    \frametitle{Når vi utvikler komplekse systemer, trenger vi…}
 \begin{itemize}
 
-    \item …men vi trenger også verktøy for å analysere \emph{kjørende} systemer
+    \item …men hva med \emph{kjørende} systemer som det er \emph{svært kostbart}
+        å ta ned?
 
     \item  Det er ikke nok å kunne få innsikt i ting når vi sitter på våre egne
-      utviklingsmaskiner. Hva skjer hvis noe skjærer seg i det ferdige produktet?
+      utviklingsmaskiner.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vi \emph{må} kunne få innsikt i det kjørende systemet}
+\begin{itemize}
   \item Vi må raskt kunne få innsikt i det kjørende systemet…
-  \item …uten at selve \emph{observasjonen av systemet} påvirker sikkerhet eller ytelse.
+  \item …uten at selve \emph{observasjonen av systemet} påvirker \textbf{sikkerhet} eller \textbf{ytelse}.
 \end{itemize}
 \end{frame}
 
@@ -101,17 +126,28 @@
     \frametitle{DTrace to the rescue!}
 
     \begin{itemize}
-\item DTrace er laget fra bunn av for å løse disse problemene.
+        \item \textbf{DTrace er laget fra bunn av for å løse disse problemene!}
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Om DTrace}
+    \begin{itemize}
+
+\item DTrace ble lansert av Sun Microsystems i 2005.
+
+\item Beviste for verden at dynamisk tracing kan gjøres på en sikker måte.
+    %etter flere års intenst arbeid fra noen av deres aller beste ingeniører.
+
+\item Finnes på Mac OS X, FreeBSD, NetBSD og de fleste OpenSolaris-forks (Illumos etc.).
 
 \item DTrace er \emph{åpen kildekode} men anses dessverre ikke for å være GPL-kompatibel.
-    Dette betyr dessverre at linux-støtten er begrenset.
+    Dette betyr dessverre at Linux-støtten er begrenset.
 
-\item Ble lansert av Sun Microsystems i 2005, etter flere års intenst arbeid
-      fra noen av deres aller beste ingeniører.
+\item Linux har likevel verktøy som kan gi deg det aller meste av DTrace's funksjonalitet.
 
-  \item Nå, ti år senere, ser instrumenteringslanskapet ganske annerledes ut.
-      Innsiktene fra DTrace har inspirert nye teknologier: Linux har verktøy
-      som kan gi deg det aller meste av DTrace's funksjonalitet.
+
     \end{itemize}
 
 \end{frame}
@@ -138,7 +174,14 @@
               observere systemet \emph{fortløende} ved å endre
          cpu-instruksjonene som ligger i minnet!
 
-     \item Dette betyr blandt annet:
+         \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+    \frametitle{Nøkkelideen: Dynamisk Tracing}
+ \begin{itemize}
+
+     \item Dette betyr blant annet:
 
          \begin{enumerate}
              \item Programmer må ikke lages observerbare for å kunne observeres:
@@ -169,6 +212,14 @@
      \item Vi bruker DTrace ved å knytte handlinger til disse hendelsene
          for å observere systemet.
  \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+     \frametitle{Det store bildet 1}
+\begin{figure}
+\includegraphics[scale=0.40]{architecture.png}
+\caption{Fra \emph{Solaris Dynamic Tracing Guide}, side 33}
+\end{figure}
  \end{frame}
 
  \begin{frame}
@@ -300,7 +351,7 @@
  \end{frame}
 
  \begin{frame}
-     \frametitle{Det store bildet}
+     \frametitle{Det store bildet 2}
 \begin{figure}
 \includegraphics[scale=0.40]{architecture.png}
 \caption{Fra \emph{Solaris Dynamic Tracing Guide}, side 33}
@@ -328,7 +379,7 @@
     når en hendelse inntreffer.
 
 \item Dette kan vi gjøre mer sofistikert, med å bruke innebygde
-    variabler, som execname, pid, timestamp osv.
+    variabler, som \texttt{execname}, \texttt{pid}, \texttt{timestamp} osv.
 
 \item Med disse enkle byggestenene kan vi til og med inspisere hvilke
     argumenter funksjoner blir kalt med!
@@ -338,6 +389,7 @@
 
  \begin{frame}
      \frametitle{Actions: Innebygde funksjoner}
+
 \begin{enumerate}
     \item Vi kan gå enda lenger…
 
@@ -352,14 +404,66 @@
 \end{enumerate}
  \end{frame}
 
-% * 
+ \begin{frame}
+     \frametitle{Actions: Aggregeringer}
+     \begin{itemize}
+ \item Vi kan bruke aggregeringer for å få mere konsise statistikker.
 
+ \item Det finnes adskillig mer sofistikerte aggregeringer i \texttt{count()},
+     men det rekker jeg ikke gå inn på.
+     \end{itemize}
+ \end{frame}
 
-% * Actions: Aggregeringer
+\begin{frame}
+     \frametitle{Predikater}
+     \begin{itemize}
+         \item Vi kan bruke predikater til å filtrere \emph{før} vi gjør
+             actions.
+         \item Sammenligningene fungerer som i \texttt{C}.
+     \end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Hvordan det føles}
+\begin{figure}
+\includegraphics[scale=0.08]{miksebord.jpg}
+\caption{Hvor er groove-spaken?}
+\end{figure}
+\end{frame}
 
-%     * Vi kan bruke aggregeringer for å få mere konsise statistikker.
+ \begin{frame}
+     \frametitle{Konklusjon}
+     \begin{itemize}
+         \item Metode er \emph{essensielt}.
+         \item Vi må definere problemene våre på en måte som kan \emph{måles}.
+         \item DTrace er et ekspertverktøy…
+         \item …men kan også hjelpe oss til å \emph{bli} eksperter!
+     \end{itemize}
+ \end{frame}
 
-%     * count() er et ganske åpenbart eksempel...
+ \begin{frame}
+     \frametitle{Hvis du vil vite mer…}
+     \begin{itemize}
+         \item Tips, triks, ting å lese, ting å se: \url{https://github.com/cmrosenberg/}
+     \end{itemize}
+ \end{frame}
 
+ \begin{frame}
+     \frametitle{Kilder}
+     \printbibliography
+ \end{frame}
+
+ \begin{frame}
+     \frametitle{Spørsmål?}
+     \begin{itemize}
+         \item Spørsmål?
+     \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+     \frametitle{Takk for meg!}
+     \begin{itemize}
+         \item Takk for meg!
+     \end{itemize}
+ \end{frame}
 
 \end{document}
