@@ -1,7 +1,7 @@
 
 <em>This repository holds a presentation I held for the student community
 [MAPS](http://foreninger.uio.no/maps/) at the University of Oslo.
-The content is in Norwegian</em>
+The content is in Norwegian.</em>
 
 # DTrace foredrag 25.02.2015
 
