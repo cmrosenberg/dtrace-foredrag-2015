@@ -5,7 +5,7 @@ The content is in Norwegian</em>
 
 # DTrace foredrag 25.02.2015
 
-Du kan lese slidene her.
+Du kan lese slidene [her](https://github.com/cmrosenberg/dtrace-foredrag-2015/blob/master/slides/slides.pdf).
 
 ## Kilder
 
