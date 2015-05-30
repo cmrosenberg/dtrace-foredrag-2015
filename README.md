@@ -21,7 +21,7 @@ For å lære mer om hvordan du bruker DTrace anbefaler jeg å først se på
 [DTrace User Guide](http://docs.oracle.com/cd/E19253-01/819-5488/gcfba/index.html)
 og deretter den komplette manualen. Den mest oppdaterte versjonen av den komplette
 manualen finner du på [illumos Dynamic Tracing Guide](
-http://dtrace.org/guide/chapter.html). I sistnevnte finner du absolutt alt du
+http://dtrace.org/guide/preface.html). I sistnevnte finner du absolutt alt du
 måtte lure på om D-språket osv.
 
 [Brendan Gregg](http://www.brendangregg.com/) er et svært sentralt navn
